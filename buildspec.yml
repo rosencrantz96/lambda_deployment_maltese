@@ -1,4 +1,9 @@
 version: 0.2
+
+env:
+   variables:
+      LAMBDA_FUNCTION_NAME: 'myLambdaMaltese'
+
 phases:
    install:
       runtime-versions:
@@ -8,7 +13,7 @@ phases:
    build:
       commands:
          - pip install -r requirements.txt -t .
-         - aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME} --zip-file fileb://$(pwd)
+         - aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --zip-file fileb://$(pwd)
 artifacts:
    files:
       - '**/*'
