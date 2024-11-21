@@ -1,19 +1,39 @@
 version: 0.2
 
 env:
-   variables:
-      LAMBDA_FUNCTION_NAME: 'myLambdaMaltese'
+  variables:
+    LAMBDA_FUNCTION_NAME: 'myLambdaMaltese'
 
 phases:
-   install:
-      runtime-versions:
-         python: 3.8
-      commands:
-         - pip install --upgrade pip
-   build:
-      commands:
-         - pip install -r requirements.txt -t .
-         - aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --zip-file fileb://$(pwd)
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - pip install --upgrade pip --user
+  build:
+    commands:
+      - pip install -r requirements.txt -t . --user
+      - zip -r function.zip .
+      - aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --zip-file fileb://function.zip
 artifacts:
-   files:
-      - '**/*'
+  files:
+    - function.zipversion: 0.2
+
+env:
+  variables:
+    LAMBDA_FUNCTION_NAME: 'myLambdaMaltese'
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - pip install --upgrade pip --user
+  build:
+    commands:
+      - pip install -r requirements.txt -t . --user
+      - zip -r function.zip .
+      - aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --zip-file fileb://function.zip
+artifacts:
+  files:
+    - function.zip
